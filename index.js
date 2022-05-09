@@ -11,7 +11,6 @@ const TOKEN = process.env.TOKEN
 const LOAD_SLASH = process.argv[2] == "load"
 
 const CLIENT_ID = "971892917641805885"
-const GUILD_ID = "972091829619159040"
 
 const client = new Discord.Client({
     intents: [
@@ -40,10 +39,10 @@ for (const file of slashFiles){
 if (LOAD_SLASH) {
     const rest = new REST({ version: "9" }).setToken(TOKEN)
     console.log("Deploying slash commands")
-	 rest.put(
-		Routes.applicationCommands(CLIENT_ID),
-		{ body: commands },
-	)
+         rest.put(
+        Routes.applicationCommands(CLIENT_ID),
+        { body: commands },
+    )
     .then(() => {
         console.log("Successfully loaded")
         process.exit(0)
@@ -67,9 +66,13 @@ else {
             if (!slashcmd) interaction.reply("Not a valid slash command")
 
             await interaction.deferReply()
-            await slashcmd.run({ client, interaction })
+            await slashcmd.run(client, interaction)
         }
         handleCommand()
     })
+
+
+
     client.login(TOKEN)
 }
+
